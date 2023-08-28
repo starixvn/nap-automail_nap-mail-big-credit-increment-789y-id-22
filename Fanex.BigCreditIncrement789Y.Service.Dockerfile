@@ -6,7 +6,7 @@ COPY ./Fanex.BigCreditIncrement789Y.Service/Fanex.BigCreditIncrement789Y.Service
 
 RUN ls /src -l
 WORKDIR /src/Fanex.BigCreditIncrement789Y.Service
-RUN dotnet nuget add source http://nuget.nexdev.net/api/v2
+RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
 RUN dotnet restore -v n
 
 COPY ./Fanex.BigCreditIncrement789Y.Service/Fanex.BigCreditIncrement789Y.Service .
