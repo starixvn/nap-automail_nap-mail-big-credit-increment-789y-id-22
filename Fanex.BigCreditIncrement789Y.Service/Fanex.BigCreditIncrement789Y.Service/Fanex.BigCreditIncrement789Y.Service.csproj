@@ -7,13 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="App_Data\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <None Remove="App_Data\DBLOG.bodb_CustomerLog.wsv_nap.xml" />
     <None Remove="Templates\BigCreditIncrement789Y-NoData.xlsx" />
     <None Remove="Templates\BigCreditIncrement789Y.xlsx" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="App_Data\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
+    <Content Include="App_Data\DBLOG.bodb_CustomerLog.wsv_nap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\BigCreditIncrement789Y-NoData.xlsx">
