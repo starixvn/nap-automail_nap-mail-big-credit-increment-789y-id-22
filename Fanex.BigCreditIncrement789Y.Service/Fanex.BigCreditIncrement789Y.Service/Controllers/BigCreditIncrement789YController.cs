@@ -1,5 +1,5 @@
-﻿using Fanex.MailDelivery.Core.Models;
-using Fanex.BigCreditIncrement789Y.Business.Services;
+﻿using Fanex.BigCreditIncrement789Y.Business.Services;
+using Fanex.MailDelivery.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fanex.BigCreditIncrement789Y.Service.Controllers
@@ -10,10 +10,9 @@ namespace Fanex.BigCreditIncrement789Y.Service.Controllers
     {
         private readonly MainService service;
 
-        public BigCreditIncrement789YController()
+        public BigCreditIncrement789YController(MainService service)
         {
-            var container = RegisterService.Container;
-            service = container.GetInstance<MainService>();
+            this.service = service;
         }
 
         [HttpGet]
