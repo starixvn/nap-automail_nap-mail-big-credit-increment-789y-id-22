@@ -11,9 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IO;
 using Newtonsoft.Json;
 using OfficeOpenXml;
-using Quartz;
-using Quartz.Impl;
 using SharpRaven;
+using SimpleInjector;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,9 +21,21 @@ using LetstalkConfig = Fanex.LetstalkService.Core.Services.AppConfigService;
 
 namespace Fanex.BigCreditIncrement789Y.Service
 {
-    public static class ServiceCollectionExtensions
+    public static class RegisterService
     {
-        public static void LoadConfig()
+        public static void RegisterServices(IConfiguration configuration, Container container)
+        {
+            LoadConfig();
+            SentryRegister();
+            ConfigureFanexData(configuration);
+            DependencyInjection(container);
+        }
+
+        public static Container Container { get; set; }
+
+        public static IServiceCollection Services { get; set; }
+
+        private static void LoadConfig()
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
@@ -34,7 +45,7 @@ namespace Fanex.BigCreditIncrement789Y.Service
             LetstalkConfig.Config.LetstalkServiceApi = AppConfigService.Config.LetstalkServiceApi;
         }
 
-        public static void SentryRegister(this IServiceCollection services)
+        private static void SentryRegister()
         {
             var sentry = new SentryLogging(new SentryEngineOptions
             {
@@ -49,7 +60,7 @@ namespace Fanex.BigCreditIncrement789Y.Service
                });
         }
 
-        public static void FanexDataRegister(this IServiceCollection services, IConfiguration Configuration)
+        private static void ConfigureFanexData(IConfiguration Configuration)
         {
             var connections = Configuration.GetSection("ConnectionStrings")
                 .GetChildren()
@@ -67,39 +78,23 @@ namespace Fanex.BigCreditIncrement789Y.Service
              .Run();
         }
 
-        public static void InternalServiceRegister(this IServiceCollection services)
+        private static void DependencyInjection(Container container)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            services.AddSingleton<Log, LogImp>();
-            services.AddSingleton<IDynamicRepository, DynamicRepository>();
-            services.AddSingleton<DataService, DataServiceImp>();
-            services.AddSingleton<MailService, MailServiceImp>();
-            services.AddSingleton<MessageService, MessageServiceImp>();
-            services.AddSingleton<LetstalkClientService, LetstalkClientServiceImp>();
-            services.AddSingleton<ImageService, ImageServiceImp>();
-            services.AddSingleton<DateTimeServiceProvider, DateTimeServiceProviderImp>();
-            services.AddSingleton<ExcelService, ExcelServiceImp>();
-            services.AddSingleton<MainService, MainServiceImp>();
+            container.RegisterSingleton<Log, LogImp>();
+            container.RegisterSingleton<IDynamicRepository, DynamicRepository>();
+            container.RegisterSingleton<DataService, DataServiceImp>();
+            container.RegisterSingleton<MailService, MailServiceImp>();
+            container.RegisterSingleton<MessageService, MessageServiceImp>();
+            container.RegisterSingleton<LetstalkClientService, LetstalkClientServiceImp>();
+            container.RegisterSingleton<ImageService, ImageServiceImp>();
+            container.RegisterSingleton<DateTimeServiceProvider, DateTimeServiceProviderImp>();
+            container.RegisterSingleton<ExcelService, ExcelServiceImp>();
+            container.RegisterSingleton<MainService, MainServiceImp>();
 
+            Container = container;
             OnebookUMInitializer.InitializeUMClientManager();
-            OnebookUMInitializer.RegisterSimpleInjector(services);
-        }
-
-        public static void StartScheduler(this IServiceCollection services)
-        {
-            var serviceProvider = services.BuildServiceProvider();
-            var scheduler = StdSchedulerFactory.GetDefaultScheduler().Result;
-            scheduler.JobFactory = new BigCreditIncrement789YJobFactory(serviceProvider);
-
-            var trigger = TriggerBuilder.Create()
-                .WithIdentity("Fanex.BigCreditIncrement789Y.Service", "Fanex.BigCreditIncrement789Y.Service")
-                .StartNow()
-                .WithCronSchedule(AppConfigService.Config.CronSchedule)
-                .Build();
-
-            var job = JobBuilder.Create<BigCreditIncrement789YJob>().Build();
-            scheduler.ScheduleJob(job, trigger).Wait();
-            scheduler.Start().Wait();
+            OnebookUMInitializer.RegisterSimpleInjector(container);
         }
     }
 }
