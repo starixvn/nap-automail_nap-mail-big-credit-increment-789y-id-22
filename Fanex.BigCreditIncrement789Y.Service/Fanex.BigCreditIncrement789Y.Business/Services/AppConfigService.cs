@@ -8,5 +8,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
         public static ConfigSettingModel Config { get; set; }
 
         public static RecyclableMemoryStreamManager RecyclableMemoryStreamManager { get; set; }
+
+        public static bool IsDone { get; set; }
     }
 }
