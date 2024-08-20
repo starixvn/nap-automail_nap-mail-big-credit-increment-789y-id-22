@@ -1,13 +1,16 @@
+using Fanex.BigCreditIncrement789Y.Service;
+using Fanex.BigCreditIncrement789Y.Service.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using SimpleInjector;
 using System;
 using System.IO;
 
-namespace Fanex.BigCreditIncrement789Y.Service
+namespace Fanex.BigCreditIncrement789YByTO.Service
 {
     public class Startup
     {
@@ -28,29 +31,9 @@ namespace Fanex.BigCreditIncrement789Y.Service
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fanex.BigCreditIncrement789Y.Service", Version = "v1" });
             });
 
-            ServiceCollectionExtensions.LoadConfig();
-            ServiceCollectionExtensions.SentryRegister(services);
-            ServiceCollectionExtensions.FanexDataRegister(services, Configuration);
-            ServiceCollectionExtensions.InternalServiceRegister(services);
-            ServiceCollectionExtensions.StartScheduler(services);
-
-            //services.Configure<HostOptions>(options =>
-            //{
-            //    options.ShutdownTimeout = TimeSpan.FromSeconds(45);
-            //});
-
-            //services.ConfigureAll<IHostApplicationLifetime>(lifetime =>
-            //{
-            //    lifetime.ApplicationStopped.Register(() =>
-            //    {
-            //        Console.WriteLine($"Application is stopped at {DateTimeOffset.Now}");
-            //    });
-
-            //    lifetime.ApplicationStopping.Register(() =>
-            //    {
-            //        Console.WriteLine($"Application is being stopped at {DateTimeOffset.Now}");
-            //    });
-            //});
+            var container = new Container();
+            RegisterService.RegisterServices(Configuration, container);
+            BigCreditIncrement789YService.Execute();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

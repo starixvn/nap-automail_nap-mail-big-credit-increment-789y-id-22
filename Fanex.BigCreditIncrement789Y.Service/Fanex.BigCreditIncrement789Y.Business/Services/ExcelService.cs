@@ -49,7 +49,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
             var fileName = isAllInfo
                 ? $"{setting.Exceltitle} {date:yyyyMMdd HH00}.xlsx"
                 : $"{setting.Exceltitle} Batch {batchIndex + 1} {date:yyyyMMdd HH00}.xlsx";
-            var path = $@"{AppConfigService.Config.Path}/{date:yyyy}/{date:MM}";
+            var path = $@"{AppConfigService.Config.Path}/{date:yyyyMMdd}";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

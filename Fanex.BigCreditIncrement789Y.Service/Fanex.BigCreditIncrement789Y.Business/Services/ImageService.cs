@@ -39,15 +39,15 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
         {
             var timerange = GetTimeRange();
             var date = DateTime.Now;
-            var imageName = $@"{path}/{date:yyyy}/{date:MM}";
+            var imageName = $@"{path}/{date:yyyyMMdd}";
             if (!Directory.Exists(imageName))
             {
                 Directory.CreateDirectory(imageName);
             }
 
             imageName = $@"{imageName}/{imageProperty.ImageName}_Batch_{batchIndex + 1}_On_{date:yyyyMMdd}_{timerange}.jpg";
-            var imageNameFinal = $@"{path}/{date:yyyy}/{date:MM}/{imageProperty.ImageName}_Batch{batchIndex + 1}_{date:yyyyMMdd}_{timerange}.jpg";
-            var imageNameResizeWidth = $@"{path}/{date:yyyy}/{date:MM}/{imageProperty.ImageName}_LQ_Btach{batchIndex + 1}_{date:yyyyMMdd}_{timerange}.jpg";
+            var imageNameFinal = $@"{path}/{date:yyyyMMdd}/{imageProperty.ImageName}_Batch{batchIndex + 1}_{date:yyyyMMdd}_{timerange}.jpg";
+            var imageNameResizeWidth = $@"{path}/{date:yyyyMMdd}/{imageProperty.ImageName}_LQ_Batch{batchIndex + 1}_{date:yyyyMMdd}_{timerange}.jpg";
 
             try
             {
