@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fanex.BigCreditIncrement789Y.Service.Controllers
 {
+    using Microsoft.Extensions.DependencyInjection;
+
     [ApiController]
     [Route("[controller]")]
     public class BigCreditIncrement789YController : ControllerBase
@@ -12,8 +14,9 @@ namespace Fanex.BigCreditIncrement789Y.Service.Controllers
 
         public BigCreditIncrement789YController()
         {
-            var container = RegisterService.Container;
-            service = container.GetInstance<MainService>();
+            var services = ServiceCollectionExtensions.Services;
+            var provider = services.BuildServiceProvider();
+            service = provider.GetService<MainService>();
         }
 
         [HttpGet]

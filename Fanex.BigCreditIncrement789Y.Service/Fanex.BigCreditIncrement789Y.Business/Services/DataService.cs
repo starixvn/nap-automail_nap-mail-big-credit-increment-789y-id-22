@@ -1,7 +1,6 @@
 ﻿using Fanex.BigCreditIncrement789Y.Business.Criterias;
 using Fanex.BigCreditIncrement789Y.Business.Models;
 using Fanex.Data.Repository;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,4 +1,4 @@
-﻿using Fanex.BigCreditIncrement789Y.Business.Models;
+using Fanex.BigCreditIncrement789Y.Business.Models;
 using Spire.Xls;
 using System;
 using System.Drawing;
@@ -57,7 +57,10 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
                 workbook.DocumentProperties.Clear();
                 using var sheet = workbook.Worksheets[sheetNameNeedToExport];
                 using var ms = AppConfigService.RecyclableMemoryStreamManager.GetStream();
-                sheet.ToEMFStream(ms, imageProperty.FirstRow, imageProperty.FirstColumn, imageProperty.LastRow, imageProperty.LastColumn);
+                var stream = sheet.ToImage( imageProperty.FirstRow, imageProperty.FirstColumn, imageProperty.LastRow, imageProperty.LastColumn);
+                stream.Seek(0, SeekOrigin.Begin);
+                stream.CopyTo(ms);
+                ms.Seek(0, SeekOrigin.Begin);
 
                 using var img = Image.FromStream(ms);
                 img.Save(imageName, ImageFormat.Jpeg);
