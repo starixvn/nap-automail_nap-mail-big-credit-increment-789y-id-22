@@ -6,15 +6,17 @@ COPY ./Fanex.BigCreditIncrement789Y.Service/Fanex.BigCreditIncrement789Y.Service
 
 WORKDIR /src/Fanex.BigCreditIncrement789Y.Service
 RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
-RUN dotnet restore -v n -r linux-x64
+RUN --mount=type=cache,target=/root/.nuget/packages \
+	dotnet restore -v n -r linux-x64
 
 COPY ./Fanex.BigCreditIncrement789Y.Service/Fanex.BigCreditIncrement789Y.Service .
 
-RUN dotnet publish -r linux-x64 --self-contained false -o /app 
+RUN --mount=type=cache,target=/root/.nuget/packages \
+	dotnet publish -r linux-x64 --self-contained false -o /app
 
 FROM hub.nexdev.net/base/dotnet/core/aspnet:9.0-nap-mail-core
 
-# Don’t run as root
+# Donï¿½t run as root
 RUN adduser --disabled-password \
   --home /app \
   --gecos '' dotnetuser && chown -R dotnetuser /app && chown -R dotnetuser /tmp
