@@ -1,7 +1,9 @@
 ﻿using Fanex.BigCreditIncrement789Y.Business.Models;
 using Fanex.BigCreditIncrement789Y.Business.Services;
+using Fanex.BigCreditIncrement789Y.Service.Services;
 using Fanex.Data.Repository;
 using Fanex.LetstalkService.Client;
+using Fanex.MailDelivery.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IO;
 using Newtonsoft.Json;
@@ -28,9 +30,10 @@ namespace Fanex.BigCreditIncrement789Y.Service
             LetstalkConfig.Config.LetstalkServiceApi = AppConfigService.Config.LetstalkServiceApi;
         }
 
-
         public static void AddInternalServices(this IServiceCollection services)
         {
+            Services = services;
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             services.AddSingleton<Log, LogImp>();
             services.AddSingleton<IDynamicRepository, DynamicRepository>();
@@ -43,7 +46,9 @@ namespace Fanex.BigCreditIncrement789Y.Service
             services.AddSingleton<ExcelService, ExcelServiceImp>();
             services.AddSingleton<MainService, MainServiceImp>();
 
-            Services = services;
+            services.AddSingleton<MainBackground60MinService>();
+
+            MailClientHandler.Start();
         }
     }
 }

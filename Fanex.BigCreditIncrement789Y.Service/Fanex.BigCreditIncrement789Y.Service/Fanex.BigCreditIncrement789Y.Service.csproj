@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\robert.tran\.nuget\packages\fanex.mailstation\2.1.2\contentFiles\any\net9.0\app.config.transform" />
+    <Content Remove="C:\Users\robert.tran\.nuget\packages\fanex.mailstation\2.1.2\contentFiles\any\net9.0\web.config.transform" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="App_Data\DBLOG.bodb_CustomerLog.wsv_nap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -49,12 +54,12 @@
     <Content Update="appsettings.LOCAL.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="appsettings.PROD.json">
+<Content Update="appsettings.KLPROD.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  <Content Update="appsettings.KLDR.json">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-  </Content>
+<Content Update="appsettings.KLPROD.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="appsettings.UAT.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

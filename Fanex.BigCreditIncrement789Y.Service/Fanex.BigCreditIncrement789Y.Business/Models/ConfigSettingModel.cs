@@ -1,20 +1,11 @@
-﻿using ONEbook.UM.Configurations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Fanex.BigCreditIncrement789Y.Business.Models
 {
     public class ConfigSettingModel
     {
-        public bool IsCheckEnoughData { get; set; }
-
-        public string SentryClientKey { get; set; }
-
-        public string CategorySentryLog { get; set; }
-
         public string LetstalkServiceApi { get; set; }
-
-        public UMClientConfiguration UMConfig { get; set; }
 
         public string Path { get; set; }
 
@@ -24,8 +15,6 @@ namespace Fanex.BigCreditIncrement789Y.Business.Models
 
         public int MailId { get; set; }
 
-        public string CronSchedule { get; set; } = "0 0 0/1 * * ?";
-
         public bool IsTest { get; set; }
 
         public bool IsManual { get; set; }
@@ -34,7 +23,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Models
 
         public DateTime ToDate { get; set; }
 
-        public Dictionary<string, ImageProperty> ImageSettings { get; set; } = new Dictionary<string, ImageProperty>();
+        public Dictionary<string, ImageProperty> ImageSettings { get; set; } = new();
 
         public BigCreditIncrement789YSettings BigCreditIncrement789YSettings { get; set; }
     }
