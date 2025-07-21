@@ -1,11 +1,12 @@
-using System;
-using System.IO;
 using Fanex.BigCreditIncrement789Y.Service;
+using Fanex.BigCreditIncrement789Y.Service.Services;
 using Fanex.Data.SqlServer;
 using Fanex.Logging.Sentry.RavenClient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using ONEbook.UM.DependencyInjection;
+using System;
+using System.IO;
 
 Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
@@ -22,6 +23,8 @@ services.AddInternalServices();
 
 services.AddControllers();
 services.AddSwaggerGen();
+
+services.AddHostedService<MainBackground60MinService>();
 
 var app = builder.Build();
 

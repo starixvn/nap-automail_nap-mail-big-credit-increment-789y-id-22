@@ -11,17 +11,9 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
         List<PunterModel> QueryBigCreditIncrement();
     }
 
-    public class DataServiceImp : DataService
+    public class DataServiceImp(IDynamicRepository repository, DateTimeServiceProvider dateService)
+        : DataService
     {
-        private readonly IDynamicRepository repository;
-        private readonly DateTimeServiceProvider dateService;
-
-        public DataServiceImp(IDynamicRepository repository, DateTimeServiceProvider dateService)
-        {
-            this.repository = repository;
-            this.dateService = dateService;
-        }
-
         public List<PunterModel> QueryBigCreditIncrement()
         {
             var criteria = new Criteria

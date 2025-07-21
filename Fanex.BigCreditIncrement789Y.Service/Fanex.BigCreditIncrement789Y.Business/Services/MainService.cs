@@ -12,35 +12,17 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
         JobMessage Execute();
     }
 
-    public class MainServiceImp : MainService
+    public class MainServiceImp(
+        Log log,
+        DataService dataService,
+        LetstalkClientService letstalkService,
+        ExcelService excelService,
+        MessageService messageService,
+        ImageService imageService,
+        MailService mailService)
+        : MainService
     {
-        private readonly Log log;
-        private readonly DataService dataService;
-        private readonly LetstalkClientService letstalkService;
-        private readonly ExcelService excelService;
-        private readonly MessageService messageService;
-        private readonly ImageService imageService;
-        private readonly MailService mailService;
-
         private readonly Mail mail = new() { Subject = string.Empty, Body = string.Empty };
-
-        public MainServiceImp(
-            Log log,
-            DataService dataService,
-            LetstalkClientService letstalkService,
-            ExcelService excelService,
-            MessageService messageService,
-            ImageService imageService,
-            MailService mailService)
-        {
-            this.log = log;
-            this.dataService = dataService;
-            this.letstalkService = letstalkService;
-            this.excelService = excelService;
-            this.messageService = messageService;
-            this.imageService = imageService;
-            this.mailService = mailService;
-        }
 
         public JobMessage Execute()
         {
@@ -129,7 +111,8 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
 
             if (imageSentFail.Count > 0)
             {
-                letstalkFails.Add($"{string.Join(Environment.NewLine, imageSentFail)} - Letstalk sent images Unsuccessfully.");
+                letstalkFails.Add(
+                    $"{string.Join(Environment.NewLine, imageSentFail)} - Letstalk sent images Unsuccessfully.");
             }
 
             return imageSentFail;
@@ -149,7 +132,8 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
             return new List<string> { string.Empty };
         }
 
-        private string ExportImage(BigCreditIncrement789YSettings setting, string excelPath, int batchIndex, int rowCount)
+        private string ExportImage(BigCreditIncrement789YSettings setting, string excelPath, int batchIndex,
+            int rowCount)
         {
             var lastRow = rowCount + (rowCount > 0 ? 4 : 5);
             var image = AppConfigService.Config.ImageSettings["BigCreditIncrement789YSettings"];

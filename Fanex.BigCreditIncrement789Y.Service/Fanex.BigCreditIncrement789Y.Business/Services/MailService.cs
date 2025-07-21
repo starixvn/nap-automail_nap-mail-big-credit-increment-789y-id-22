@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Fanex.MailDelivery.Client;
+﻿using Fanex.MailDelivery.Client;
 using Fanex.MailDelivery.Core.Models;
 using RazorEngine;
 using RazorEngine.Templating;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Fanex.BigCreditIncrement789Y.Business.Services
 {
@@ -31,9 +31,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
                 MailingListId = AppConfigService.Config.MailId,
             };
 
-            MailClientHandler.Start();
             MailClientHandler.SendFunctionMail(mail);
-            MailClientHandler.Stop();
         }
 
         private string Content(string fileName, string excelTitle, DateTime rptDate)
