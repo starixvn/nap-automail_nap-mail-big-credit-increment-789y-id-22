@@ -22,7 +22,16 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
                 IsTest = AppConfigService.Config.IsTest
             };
 
-            return repository.Fetch<PunterModel>(criteria).ToList();
+            var models = repository.Fetch<PunterModel>(criteria).ToList();
+            models.ForEach(m =>
+            {
+                m.OldCredit /= AppConfigService.ScaleDecimal;
+                m.OldRmCredit/= AppConfigService.ScaleDecimal;
+                m.NewCredit /= AppConfigService.ScaleDecimal;
+                m.NewRmCredit /= AppConfigService.ScaleDecimal;
+            });
+
+            return models;
         }
     }
 }

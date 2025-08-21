@@ -24,7 +24,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="ONEbook.UM" Version="3.2.6" />
     <PackageReference Include="RazorEngine.NetCore" Version="3.1.0" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.8" />
 
   </ItemGroup>
