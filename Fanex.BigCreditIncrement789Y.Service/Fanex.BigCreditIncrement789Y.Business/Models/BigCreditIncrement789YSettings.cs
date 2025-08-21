@@ -2,9 +2,9 @@
 {
     public class BigCreditIncrement789YSettings
     {
-        public string Exceltitle { get; set; }
+        public string ExcelTitle { get; set; }
 
-        public string LetstalkGroup { get; set; } = "Saba-Soccer-Test";
+        public string LetsTalkGroup { get; set; } = "Saba-Soccer-Test";
 
         public string Subject { get; set; }
     }

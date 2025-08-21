@@ -17,7 +17,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
     {
         public string ExportExcel(List<PunterModel> data, int batchIndex, int totalBatch, bool isAllInfo, BigCreditIncrement789YSettings setting)
         {
-            using var excelPackage = new ExcelPackage(new FileInfo($"Templates/BigCreditIncrement789Y.xlsx"));
+            using var excelPackage = new ExcelPackage(new FileInfo("Templates/BigCreditIncrement789Y.xlsx"));
             using var template = excelPackage.Workbook.Worksheets["Data"];
             template.Cells["B5"].LoadFromCollection(data, false);
 
@@ -47,15 +47,15 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
         {
             var date = DateTime.Now;
             var fileName = isAllInfo
-                ? $"{setting.Exceltitle} {date:yyyyMMdd HH00}.xlsx"
-                : $"{setting.Exceltitle} Batch {batchIndex + 1} {date:yyyyMMdd HH00}.xlsx";
-            var path = $@"{AppConfigService.Config.Path}/{date:yyyyMMdd}";
+                ? $"{setting.ExcelTitle} {date:yyyyMMdd HH00}.xlsx"
+                : $"{setting.ExcelTitle} Batch {batchIndex + 1} {date:yyyyMMdd HH00}.xlsx";
+            var path = $"{AppConfigService.Config.Path}/{date:yyyyMMdd}";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
 
-            path = $@"{path}/{fileName}";
+            path = $"{path}/{fileName}";
             excelPackage.Workbook.Worksheets["Data"].Column(9).Hidden = true;
             excelPackage.SaveAs(new FileInfo(path), AppConfigService.Config.Password);
             excelPackage.Dispose();
@@ -64,7 +64,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
 
         public string ExportExcelWithNoData(BigCreditIncrement789YSettings setting)
         {
-            using var excelPackage = new ExcelPackage(new FileInfo($"Templates/BigCreditIncrement789Y-NoData.xlsx"));
+            using var excelPackage = new ExcelPackage(new FileInfo("Templates/BigCreditIncrement789Y-NoData.xlsx"));
             using var template = excelPackage.Workbook.Worksheets["Data"];
             RenderTitle(template);
 

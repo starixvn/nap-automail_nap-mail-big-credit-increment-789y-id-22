@@ -7,25 +7,27 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
 
     public interface MessageService
     {
-        LetstalkModel CreateLetstalkModel(string fileName, string letstalkGroup);
+        LetstalkModel CreateLetsTalkModel(string fileName, string letsTalkGroup);
     }
 
     public class MessageServiceImp : MessageService
     {
-        public LetstalkModel CreateLetstalkModel(string fileName, string letstalkGroup)
+        public LetstalkModel CreateLetsTalkModel(string fileName, string letsTalkGroup)
         {
-            var letstalkAttachments = new List<LetstalkAttachment>();
-            letstalkAttachments.Add(new LetstalkAttachment
+            var attachments = new List<LetstalkAttachment>
             {
-                FileName = fileName,
-                Bytes = File.ReadAllBytes(fileName)
-            });
+                new()
+                {
+                    FileName = fileName,
+                    Bytes = File.ReadAllBytes(fileName)
+                }
+            };
 
             return new LetstalkModel
             {
                 TargetName = AppConfigService.Config.TargetName,
-                Group = letstalkGroup,
-                LetstalkAttachments = letstalkAttachments,
+                Group = letsTalkGroup,
+                LetstalkAttachments = attachments,
                 Subject = string.Empty,
                 Content = string.Empty
             };

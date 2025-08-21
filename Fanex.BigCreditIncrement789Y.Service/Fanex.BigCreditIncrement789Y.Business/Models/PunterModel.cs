@@ -14,8 +14,8 @@ namespace Fanex.BigCreditIncrement789Y.Business.Models
 
         public decimal NewCredit { get; set; }
 
-        public decimal OldRMCredit { get; set; }
+        public decimal OldRmCredit { get; set; }
 
-        public decimal NewRMCredit { get; set; }
+        public decimal NewRmCredit { get; set; }
     }
 }

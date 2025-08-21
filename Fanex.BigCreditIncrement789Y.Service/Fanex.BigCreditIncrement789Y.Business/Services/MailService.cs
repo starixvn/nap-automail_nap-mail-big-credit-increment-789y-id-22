@@ -19,7 +19,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
         {
             var attachments = new List<MailAttachment>
             {
-                new MailAttachment(fileName, FileExtension.MS_EXCEL)
+                new(fileName, FileExtension.MS_EXCEL)
             };
 
             var mail = new Mail
@@ -38,7 +38,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
         {
             var tuple = new Tuple<string, string, DateTime>(new FileInfo(fileName).Name, excelTitle, rptDate);
             var template = File.ReadAllText("Templates/BigCreditIncrement789Y.cshtml");
-            var result = Engine.Razor.RunCompile(template, $"Template-BigCreditIncrement789Y", model: tuple);
+            var result = Engine.Razor.RunCompile(template, "Template-BigCreditIncrement789Y", model: tuple);
 
             return result;
         }

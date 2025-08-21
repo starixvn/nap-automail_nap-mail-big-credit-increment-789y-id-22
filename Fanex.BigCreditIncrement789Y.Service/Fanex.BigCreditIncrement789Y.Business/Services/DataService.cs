@@ -1,5 +1,4 @@
-﻿using Fanex.BigCreditIncrement789Y.Business.Criterias;
-using Fanex.BigCreditIncrement789Y.Business.Models;
+﻿using Fanex.BigCreditIncrement789Y.Business.Models;
 using Fanex.Data.Repository;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
     {
         public List<PunterModel> QueryBigCreditIncrement()
         {
-            var criteria = new Criteria
+            var criteria = new Criteria.Criteria
             {
                 FromDate = dateService.DateTime.FromDate,
                 ToDate = dateService.DateTime.ToDate,
