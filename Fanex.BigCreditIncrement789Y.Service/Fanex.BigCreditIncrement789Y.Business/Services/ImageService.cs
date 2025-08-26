@@ -23,7 +23,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
             var now = DateTime.Now.AddHours(-1);
             if (now.Hour == 0)
             {
-                return $"00-24";
+                return "00-24";
             }
 
             return $"{now:HH}00-{now:HH}59";
@@ -32,7 +32,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
         public string ExportImage(string excelPath, int batchIndex, string sheetNameNeedToExport,
             ImageProperty imageProperty, string path)
         {
-            var timerange = GetTimeRange();
+            var range = GetTimeRange();
             var date = DateTime.Now;
             var imageName = $"{AppConfigService.Config.Path}/{date:yyyyMMdd}";
             if (!Directory.Exists(imageName))
@@ -40,9 +40,9 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
                 Directory.CreateDirectory(imageName);
             }
 
-            imageName = $"{imageName}/{imageProperty.ImageName}_{batchIndex + 1}_On_{date:yyyyMMdd}_{timerange}.jpg";
+            imageName = $"{imageName}/{imageProperty.ImageName}_{batchIndex + 1}_On_{date:yyyyMMdd}_{range}.jpg";
             var imageNameFinal =
-                $"{AppConfigService.Config.Path}/{date:yyyyMMdd}/{imageProperty.ImageName}_{batchIndex + 1}_F_{date:yyyyMMdd}_{timerange}.jpg";
+                $"{AppConfigService.Config.Path}/{date:yyyyMMdd}/{imageProperty.ImageName}_{batchIndex + 1}_F_{date:yyyyMMdd}_{range}.jpg";
 
             try
             {

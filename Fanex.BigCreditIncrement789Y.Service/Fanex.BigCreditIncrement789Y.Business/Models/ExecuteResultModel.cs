@@ -8,6 +8,6 @@ namespace Fanex.BigCreditIncrement789Y.Business.Models
 
         public string Message { get; set; } = string.Empty;
 
-        public Mail Mail { get; set; } = new Mail();
+        public Mail Mail { get; set; } = new();
     }
 }

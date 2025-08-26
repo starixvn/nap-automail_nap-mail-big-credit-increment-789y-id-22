@@ -1,7 +1,7 @@
-﻿using Fanex.Data.Repository;
-using System;
+﻿using System;
+using Fanex.Data.Repository;
 
-namespace Fanex.BigCreditIncrement789Y.Business.Criterias
+namespace Fanex.BigCreditIncrement789Y.Business.Criteria
 {
     public class Criteria : CriteriaBase
     {

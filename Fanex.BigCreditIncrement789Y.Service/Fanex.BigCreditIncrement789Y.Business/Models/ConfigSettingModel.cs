@@ -5,7 +5,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Models
 {
     public class ConfigSettingModel
     {
-        public string LetstalkServiceApi { get; set; }
+        public string LetsTalkServiceApi { get; set; }
 
         public string Path { get; set; }
 

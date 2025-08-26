@@ -15,7 +15,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
     public class MainServiceImp(
         Log log,
         DataService dataService,
-        LetstalkClientService letstalkService,
+        LetstalkClientService letsTalkService,
         ExcelService excelService,
         MessageService messageService,
         ImageService imageService,
@@ -55,34 +55,33 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
         private ExecuteResultModel SendNotification()
         {
             log.Log("Fanex.BigCreditIncrement789Y.Service");
-            var letstalkFails = new List<string>();
+            var fails = new List<string>();
             var rawData = dataService.QueryBigCreditIncrement();
             var errFiles = rawData.Count > 0
-                ? SendLetstalkImageData(rawData)
-                : SendLetstalkImageNoData();
+                ? SendLetsTalkImageData(rawData)
+                : SendLetsTalkImageNoData();
 
             errFiles.ForEach(file =>
             {
                 if (file.Length > 1)
                 {
-                    letstalkFails.Add(file);
+                    fails.Add(file);
                 }
             });
 
             return new ExecuteResultModel
             {
-                Success = letstalkFails.Count == 0,
-                Message = string.Join(Environment.NewLine, letstalkFails),
+                Success = fails.Count == 0,
+                Message = string.Join(Environment.NewLine, fails),
                 Mail = mail
             };
         }
 
-        private List<string> SendLetstalkImageData(List<PunterModel> data)
+        private List<string> SendLetsTalkImageData(List<PunterModel> data)
         {
             var rowPerBatch = data.Count;
             var totalBatch = data.Count / rowPerBatch + ((data.Count % rowPerBatch) > 0 ? 1 : 0);
             var imageSentFail = new List<string>();
-            var letstalkFails = new List<string>();
             var setting = AppConfigService.Config.BigCreditIncrement789YSettings;
 
             for (var batchIndex = 0; batchIndex < totalBatch; batchIndex++)
@@ -91,11 +90,11 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
                 var excelPath = excelService.ExportExcel(rowsOfBatch, batchIndex, totalBatch, false, setting);
                 var rowCount = rowsOfBatch.Count;
                 var imagePath = ExportImage(setting, excelPath, batchIndex, rowCount);
-                var status = SendImage(imagePath, setting.LetstalkGroup);
+                var status = SendImage(imagePath, setting.LetsTalkGroup);
                 var countRetry = 0;
                 while (!status && countRetry < 10)
                 {
-                    status = SendImage(imagePath, setting.LetstalkGroup);
+                    status = SendImage(imagePath, setting.LetsTalkGroup);
                     countRetry++;
                 }
 
@@ -106,30 +105,24 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
             }
 
             var excelAllPath = excelService.ExportExcel(data, 0, 0, true, setting);
-            SendImage(excelAllPath, setting.LetstalkGroup);
+            SendImage(excelAllPath, setting.LetsTalkGroup);
             SendMail(setting, excelAllPath);
-
-            if (imageSentFail.Count > 0)
-            {
-                letstalkFails.Add(
-                    $"{string.Join(Environment.NewLine, imageSentFail)} - Letstalk sent images Unsuccessfully.");
-            }
 
             return imageSentFail;
         }
 
         private void SendMail(BigCreditIncrement789YSettings setting, string excelAllPath)
         {
-            mailService.SendMail(excelAllPath, setting.Exceltitle, setting.Subject, DateTime.Now);
+            mailService.SendMail(excelAllPath, setting.ExcelTitle, setting.Subject, DateTime.Now);
         }
 
-        private List<string> SendLetstalkImageNoData()
+        private List<string> SendLetsTalkImageNoData()
         {
             var setting = AppConfigService.Config.BigCreditIncrement789YSettings;
             var excelPath = excelService.ExportExcelWithNoData(setting);
             ExportImage(setting, excelPath, 0, 0);
             SendMail(setting, excelPath);
-            return new List<string> { string.Empty };
+            return [string.Empty];
         }
 
         private string ExportImage(BigCreditIncrement789YSettings setting, string excelPath, int batchIndex,
@@ -137,7 +130,7 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
         {
             var lastRow = rowCount + (rowCount > 0 ? 4 : 5);
             var image = AppConfigService.Config.ImageSettings["BigCreditIncrement789YSettings"];
-            image.ImageName = setting.Exceltitle;
+            image.ImageName = setting.ExcelTitle;
             image.LastRow = lastRow;
             image.CropHeight = lastRow * image.HeightPerRow + image.AdjustHeight;
             var path = AppConfigService.Config.Path;
@@ -148,9 +141,9 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
 
         private bool SendImage(string imagePath, string group)
         {
-            var letstalkGroup = group;
-            var letstalkModel = messageService.CreateLetstalkModel(imagePath, letstalkGroup);
-            var status = letstalkService.SendMessage(letstalkModel);
+            var letsTalkGroup = group;
+            var letsTalkModel = messageService.CreateLetsTalkModel(imagePath, letsTalkGroup);
+            var status = letsTalkService.SendMessage(letsTalkModel);
 
             return status;
         }

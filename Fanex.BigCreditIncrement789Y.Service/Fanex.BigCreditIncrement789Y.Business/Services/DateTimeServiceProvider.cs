@@ -9,24 +9,13 @@ namespace Fanex.BigCreditIncrement789Y.Business.Services
 
     public class DateTimeServiceProviderImp : DateTimeServiceProvider
     {
-        private Dictionary<bool, DateTimeService> Date
-        {
-            get
+        private Dictionary<bool, DateTimeService> Date =>
+            new()
             {
-                return new Dictionary<bool, DateTimeService>
-                {
-                    { true, new DateTimeServiceManualImp()},
-                    { false, new DateTimeServiceImp()},
-                };
-            }
-        }
+                { true, new DateTimeServiceManualImp()},
+                { false, new DateTimeServiceImp()},
+            };
 
-        public DateTimeService DateTime
-        {
-            get
-            {
-                return Date[AppConfigService.Config.IsManual];
-            }
-        }
+        public DateTimeService DateTime => Date[AppConfigService.Config.IsManual];
     }
 }

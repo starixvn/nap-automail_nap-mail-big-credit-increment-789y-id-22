@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using OfficeOpenXml;
 using System;
 using System.IO;
-using LetstalkConfig = Fanex.LetstalkService.Client.AppConfigService;
+using LetsTalkConfig = Fanex.LetstalkService.Client.AppConfigService;
 
 namespace Fanex.BigCreditIncrement789Y.Service
 {
@@ -27,7 +27,7 @@ namespace Fanex.BigCreditIncrement789Y.Service
             var text = File.ReadAllText("appsettings.json");
             AppConfigService.Config = JsonConvert.DeserializeObject<ConfigSettingModel>(text);
             AppConfigService.RecyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
-            LetstalkConfig.Config.LetstalkServiceApi = AppConfigService.Config.LetstalkServiceApi;
+            LetsTalkConfig.Config.LetstalkServiceApi = AppConfigService.Config.LetsTalkServiceApi;
         }
 
         public static void AddInternalServices(this IServiceCollection services)
